@@ -1,6 +1,6 @@
 {
-  "backendUrl": "https://REEMPLAZAR-CON-DOMINIO-BACKEND",
-  "entraClientId": "REEMPLAZAR-CON-APP-ID",
-  "entraTenantId": "REEMPLAZAR-CON-TENANT-ID",
-  "entraRedirectUri": "https://REEMPLAZAR-CON-DOMINIO-FRONTEND/auth/callback"
+  "backendUrl": "https://api.alaniatest.lat",
+  "entraClientId": "aeb3a2bc-cbb6-4076-8e8e-e646dfb4f784",
+  "entraTenantId": "4e1ac428-1207-48fc-accf-ebe787537021",
+  "entraRedirectUri": "https://ai-assistant.alaniatest.lat/auth/callback"
 }
