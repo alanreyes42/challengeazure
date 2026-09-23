@@ -35,7 +35,7 @@ function AuthenticatedApp({ config }) {
 
   const getAccessToken = useMemo(
     () => async () => {
-      const request = { scopes: [`api://${config.entraClientId}/.default`], account: accounts[0] };
+      const request = { scopes: [`${config.entraClientId}/.default`], account: accounts[0] };
       try {
         const result = await instance.acquireTokenSilent(request);
         return result.accessToken;
