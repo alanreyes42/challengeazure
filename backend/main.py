@@ -12,20 +12,23 @@ from pydantic import BaseModel
 
 from auth import verify_user_token
 from cosmos_memory import guardar_turno, obtener_historial
+from documents import router as documents_router
 from graph import get_graph
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("backend.chat")
 
 app = FastAPI(title="DocuAssist Backend/Orquestador", version="1.0.0")
+app.include_router(documents_router)
 
 # CORS: solo los dos frontends autorizados (ajustar dominios reales cuando existan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://ai-assistant.midominio.com",
-        "https://app-ai-assistant.midominio.com",
-        "http://localhost:4200",  # desarrollo local del frontend
+        "https://ai-assistant.alaniatest.lat",
+        "https://app-ai-assistant.alaniatest.lat",
+        "https://app-ai-assistant-docuassist.azurewebsites.net",
+        "http://localhost:4200",
     ],
     allow_methods=["GET", "POST"],
     allow_headers=["Authorization", "Content-Type"],
