@@ -1,0 +1,6 @@
+{
+  "backendUrl": "https://REEMPLAZAR-CON-DOMINIO-BACKEND",
+  "entraClientId": "REEMPLAZAR-CON-APP-ID",
+  "entraTenantId": "REEMPLAZAR-CON-TENANT-ID",
+  "entraRedirectUri": "https://REEMPLAZAR-CON-DOMINIO-FRONTEND/auth/callback"
+}
