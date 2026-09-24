@@ -9,3 +9,5 @@ azure-ai-formrecognizer==3.3.3
 azure-search-documents==11.5.1
 openai==1.54.4
 httpx==0.27.2
+
+httpx==0.27.2
