@@ -41,9 +41,9 @@ def _get_llm(deployment: str) -> AzureChatOpenAI:
         api_key=settings.foundry_key,
         api_version="2024-08-01-preview",
         azure_deployment=deployment,
-        # Nota: gpt-5-mini/gpt-5-nano (familia "reasoning") solo soportan el
-        # temperature por defecto (1); no se fija explícitamente para evitar
-        # el error "Unsupported value: 'temperature' does not support 0.0".
+        # gpt-5-mini/gpt-5-nano (familia "reasoning") SOLO aceptan temperature=1
+        # (el default interno de langchain-openai es 0.7 si no se fija explícito).
+        temperature=1,
     )
 
 
