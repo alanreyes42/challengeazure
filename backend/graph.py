@@ -35,13 +35,15 @@ class AgentState(TypedDict, total=False):
     error: str | None
 
 
-def _get_llm(deployment: str, temperature: float = 0.0) -> AzureChatOpenAI:
+def _get_llm(deployment: str) -> AzureChatOpenAI:
     return AzureChatOpenAI(
         azure_endpoint=settings.foundry_endpoint,
         api_key=settings.foundry_key,
         api_version="2024-08-01-preview",
         azure_deployment=deployment,
-        temperature=temperature,
+        # Nota: gpt-5-mini/gpt-5-nano (familia "reasoning") solo soportan el
+        # temperature por defecto (1); no se fija explícitamente para evitar
+        # el error "Unsupported value: 'temperature' does not support 0.0".
     )
 
 
