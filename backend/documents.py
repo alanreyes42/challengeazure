@@ -38,8 +38,8 @@ async def generar_url_subida(nombre_archivo: str, claims: dict = Depends(verify_
     blob_name = f"{user_id}/{uuid.uuid4()}-{nombre_archivo}"
 
     service_client = _blob_service_client()
-    start = datetime.now(timezone.utc)
-    expiry = start + timedelta(minutes=15)
+    start = datetime.now(timezone.utc) - timedelta(minutes=5)
+    expiry = datetime.now(timezone.utc) + timedelta(minutes=15)
     user_delegation_key = service_client.get_user_delegation_key(start, expiry)
 
     sas_token = generate_blob_sas(
@@ -62,13 +62,18 @@ async def generar_url_subida(nombre_archivo: str, claims: dict = Depends(verify_
 async def confirmar_subida(blob_name: str, claims: dict = Depends(verify_user_token)):
     """El frontend llama esto tras subir con éxito a la SAS URL — dispara la ingesta en el worker."""
     user_id = claims.get("oid") or claims.get("sub")
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with httpx.AsyncClient(timeout=60) as client:
         try:
             response = await client.post(
                 f"{settings.worker_url}/ingest",
                 json={"blob_name": blob_name, "owner": user_id},
             )
             response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Error al procesar el documento: {exc.response.text}",
+            ) from exc
         except httpx.HTTPError as exc:
             raise HTTPException(status_code=502, detail=f"Error al procesar el documento: {exc}") from exc
     return response.json()
