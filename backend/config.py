@@ -34,6 +34,12 @@ class Settings(BaseSettings):
     # --- Tools API (interno, solo alcanzable dentro del clúster) ---
     tools_api_url: str = os.getenv("TOOLS_API_URL", "http://tools-api-svc.tools-api.svc.cluster.local")
 
+    # --- Worker de ingesta (interno) ---
+    worker_url: str = os.getenv("WORKER_URL", "http://worker-svc.worker.svc.cluster.local")
+
+    # --- Storage (para generar SAS de subida) ---
+    storage_account_name: str = os.getenv("STORAGE_ACCOUNT_NAME", "")
+
     # --- Umbral de confianza para "no tengo información suficiente" ---
     min_search_score: float = float(os.getenv("MIN_SEARCH_SCORE", "0.55"))
 
