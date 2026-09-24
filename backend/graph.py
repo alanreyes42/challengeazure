@@ -9,6 +9,7 @@ devolver cualquier respuesta que dependa de RAG — si el score de los fragmento
 recuperados no supera el umbral, se fuerza la ruta "sin_informacion", nunca se
 deja que el modelo "rellene" con conocimiento propio no verificable.
 """
+import logging
 from typing import TypedDict
 
 from langchain_openai import AzureChatOpenAI
@@ -86,8 +87,13 @@ async def nodo_tool(state: AgentState) -> AgentState:
 async def nodo_validar_evidencia(state: AgentState) -> AgentState:
     fragmentos = state.get("fragmentos", [])
     if not fragmentos:
+        logging.getLogger("backend.graph").info("validar_evidencia: 0 fragmentos recuperados")
         return {"evidencia_suficiente": False}
     mejor_score = max(f["score"] for f in fragmentos)
+    logging.getLogger("backend.graph").info(
+        "validar_evidencia: %d fragmentos, scores=%s, mejor=%.4f, umbral=%.4f",
+        len(fragmentos), [round(f["score"], 4) for f in fragmentos], mejor_score, settings.min_search_score,
+    )
     return {"evidencia_suficiente": mejor_score >= settings.min_search_score}
 
 

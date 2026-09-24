@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     storage_account_name: str = os.getenv("STORAGE_ACCOUNT_NAME", "")
 
     # --- Umbral de confianza para "no tengo información suficiente" ---
-    min_search_score: float = float(os.getenv("MIN_SEARCH_SCORE", "0.55"))
+    min_search_score: float = float(os.getenv("MIN_SEARCH_SCORE", "0.01"))
 
     class Config:
         env_file = ".env"
