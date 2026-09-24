@@ -32,7 +32,7 @@ def _chunk_id(document_id: str, index: int) -> str:
 async def eliminar_chunks_previos(document_id: str) -> None:
     client = _get_client()
     try:
-        results = client.search(search_text="*", filter=f"document_id eq '{document_id}'", select=["id"])
+        results = await client.search(search_text="*", filter=f"document_id eq '{document_id}'", select=["id"])
         ids_a_borrar = [{"id": doc["id"]} async for doc in results]
         if ids_a_borrar:
             await client.delete_documents(documents=ids_a_borrar)
