@@ -17,7 +17,7 @@ async def extraer_contenido(archivo_bytes: bytes) -> tuple[str, int]:
     Usa el modelo prebuilt-layout (extrae texto + estructura + tablas).
     """
     client = DocumentIntelligenceClient(
-        endpoint=settings.docintel_endpoint,
+        endpoint=settings.docintel_endpoint.rstrip("/"),
         credential=AzureKeyCredential(settings.docintel_key),
     )
     try:
