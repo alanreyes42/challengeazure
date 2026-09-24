@@ -22,7 +22,7 @@ async def extraer_contenido(archivo_bytes: bytes) -> tuple[str, int]:
     )
     try:
         poller = await client.begin_analyze_document(
-            "prebuilt-layout", body=archivo_bytes, content_type="application/octet-stream"
+            "prebuilt-layout", archivo_bytes, content_type="application/octet-stream"
         )
         result = await poller.result()
     except Exception as exc:
