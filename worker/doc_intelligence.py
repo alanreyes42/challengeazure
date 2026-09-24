@@ -19,6 +19,7 @@ async def extraer_contenido(archivo_bytes: bytes) -> tuple[str, int]:
     client = DocumentIntelligenceClient(
         endpoint=settings.docintel_endpoint.rstrip("/"),
         credential=AzureKeyCredential(settings.docintel_key),
+        api_version="2024-02-29-preview",
     )
     try:
         poller = await client.begin_analyze_document(
